@@ -27,4 +27,4 @@ app.use((err, req, res, next) => {
     message: error.message || "Internal Server Error",
     });
 });
-module.exports = ApiError;
+module.exports = ;
