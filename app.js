@@ -13,4 +13,4 @@ app.get("/", (req, res) => {
 });
 app.use("/api/contacts", contactsRouter);
 
-module.exports = app;
+module.exports = ;
