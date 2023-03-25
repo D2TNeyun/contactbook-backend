@@ -1,8 +1,8 @@
-const {ObjectId} = require(mongodb);
+const {ObjectId} = require('mongodb');
 
 class ContactService {
     constructor (client) {
-        this.contact = client.db().collection("contacts");
+        this.Contact = client.db().collection("contacts");
     }
     // Định nghĩa các phương thức truy suất CSDL sử dụng mongodb API
     extractConactData(payload) {
@@ -13,30 +13,38 @@ class ContactService {
         phone: payload.phone,
         favorite: payload.favorite,
         };
+        
+        
         // Remove undefined fields
-        Objects.keys(contact).forEach(
-        (key) => contact[key] === undefined && delete contact[key]
-        );
+        Object.keys(contact).forEach(key => contact[key] === undefined && delete contact[key])
+
+        // console.log('test extract')
         return contact;
     }
 
      async create(payload) {
-        const contact = this.extractConactData(payload);
-            const result = await this.Contact.findOneAndUpdate(
+         const contact = this.extractConactData(payload);
+         console.log('kkkfdsf')
+        
+        const result = await this.Contact.findOneAndUpdate(
         contact,
         { $set: { favorite: contact.favorite === true } },
         { returnDocument: "after", upsert: true }
         );
         return result.value;
     }
-    async find(filter) {
-        const curso = await this.contact.find(filter);
-        return await curso.toArray();
+    async find (filter) {
+        const cursor = await this.Contact.find(filter)
+        return await cursor.toArray()
     }
-    async findByName(name){
+
+    async findByName (name) {
         return await this.find({
-            name: {$regex: new RegExp(name), $option: "i"},
-        });
+            name: {
+                $regex: RegExp(name),
+                $options: 'i', // case insensitive
+            }
+        })
     }
     
   async findById(id) {

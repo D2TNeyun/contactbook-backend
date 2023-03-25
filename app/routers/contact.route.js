@@ -1,10 +1,11 @@
 const express = require("express");
-const contacts = require("../controllers/contact.controller");
-const router = express.Router();
+const contacts = require("../controllers/contact.controllers");
 
+const router = express.Router();
 router.route("/")
     .get(contacts.findAll)
     .post(contacts.create)
+    // .post((req, res) => res.send({ msg: "kkkd"}))
     .delete(contacts.deleteAll);
 
 router.route("/favorite")
